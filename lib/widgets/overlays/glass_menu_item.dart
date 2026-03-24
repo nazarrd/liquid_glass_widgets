@@ -13,13 +13,22 @@ class GlassMenuItem extends StatefulWidget {
     super.key,
     this.icon,
     this.leading,
+    this.titleStyle,
     this.isDestructive = false,
     this.trailing,
     this.height = 44.0,
+    this.padding = const EdgeInsets.symmetric(horizontal: 16),
+    this.isSelected = false,
+    this.borderRadius,
   });
 
   /// The primary text of the item.
   final String title;
+
+  /// The text style for the title.
+  ///
+  /// If not provided, defaults to a standard style.
+  final TextStyle? titleStyle;
 
   /// The icon displayed before the title.
   final IconData? icon;
@@ -43,6 +52,19 @@ class GlassMenuItem extends StatefulWidget {
   /// Defaults to 44.0 (standard iOS touch target).
   final double height;
 
+  /// Padding inside the item.
+  ///
+  /// Defaults to horizontal padding of 16.
+  final EdgeInsetsGeometry padding;
+
+  // Whether this item is currently selected (for stateful menus).
+  final bool isSelected;
+
+  /// Border radius for the item.
+  ///
+  /// If not provided, defaults to 10 for a soft rounded look.
+  final BorderRadius? borderRadius;
+
   @override
   State<GlassMenuItem> createState() => _GlassMenuItemState();
 }
@@ -62,9 +84,9 @@ class _GlassMenuItemState extends State<GlassMenuItem> {
         ? const Color(0xFFEF5350)
         : const Color(0xB3FFFFFF); // Colors.white.withValues(alpha: 0.7) cached
 
-    // Dynamic background for hover/press states
+    // Dynamic background for hover/press/selected states
     // We use a subtle white overlay to "brighten" the glass
-    final Color backgroundColor = _isPressed
+    final Color backgroundColor = _isPressed || widget.isSelected
         ? const Color(0x26FFFFFF) // alpha: 0.15
         : _isHovered
             ? const Color(0x1AFFFFFF) // alpha: 0.1
@@ -91,10 +113,10 @@ class _GlassMenuItemState extends State<GlassMenuItem> {
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeOutCubic, // iOS-style spring approximation
               height: widget.height,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: widget.padding,
               decoration: BoxDecoration(
                 color: backgroundColor,
-                borderRadius: BorderRadius.circular(10), // Inner radius
+                borderRadius: widget.borderRadius ?? BorderRadius.circular(10),
               ),
               child: Row(
                 spacing: 12,
@@ -113,11 +135,12 @@ class _GlassMenuItemState extends State<GlassMenuItem> {
                   Expanded(
                     child: Text(
                       widget.title,
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: widget.titleStyle ??
+                          TextStyle(
+                            color: textColor,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                          ),
                     ),
                   ),
 

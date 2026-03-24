@@ -69,6 +69,11 @@ class GlassMenu extends StatefulWidget {
   /// Rendering quality for the glass effect.
   final GlassQuality? quality;
 
+  /// Padding inside the menu around the items.
+  ///
+  /// Defaults to 8 pixels on all sides.
+  final EdgeInsetsGeometry padding;
+
   /// Creates a liquid glass menu.
   const GlassMenu({
     super.key,
@@ -79,6 +84,7 @@ class GlassMenu extends StatefulWidget {
     this.menuBorderRadius = 16.0,
     this.glassSettings,
     this.quality,
+    this.padding = const EdgeInsets.all(8),
   }) : assert(trigger != null || triggerBuilder != null,
             'Either trigger or triggerBuilder must be provided');
 
@@ -411,8 +417,7 @@ class _GlassMenuState extends State<GlassMenu>
                       child: SizedBox(
                         width: currentWidth, // Force exact container width
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 8),
+                          padding: widget.padding,
                           child: SingleChildScrollView(
                             physics:
                                 const ClampingScrollPhysics(), // iOS-style scrolling
@@ -427,6 +432,10 @@ class _GlassMenuState extends State<GlassMenu>
                                   isDestructive: item.isDestructive,
                                   trailing: item.trailing,
                                   leading: item.leading,
+                                  isSelected: item.isSelected,
+                                  borderRadius: item.borderRadius,
+                                  titleStyle: item.titleStyle,
+                                  padding: item.padding,
                                   height: item.height,
                                   onTap: () {
                                     item.onTap();
