@@ -426,6 +426,7 @@ class _GlassMenuState extends State<GlassMenu>
                                   icon: item.icon,
                                   isDestructive: item.isDestructive,
                                   trailing: item.trailing,
+                                  leading: item.leading,
                                   height: item.height,
                                   onTap: () {
                                     item.onTap();

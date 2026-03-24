@@ -12,7 +12,7 @@ class GlassMenuItem extends StatefulWidget {
     required this.onTap,
     super.key,
     this.icon,
-    this.iconWidget,
+    this.leading,
     this.isDestructive = false,
     this.trailing,
     this.height = 44.0,
@@ -24,8 +24,8 @@ class GlassMenuItem extends StatefulWidget {
   /// The icon displayed before the title.
   final IconData? icon;
 
-  /// The icon displayed before the title in widget format.
-  final Widget? iconWidget;
+  /// The icon displayed before the title in widget format for flexibility.
+  final Widget? leading;
 
   /// Callback when the item is tapped.
   final VoidCallback onTap;
@@ -97,16 +97,16 @@ class _GlassMenuItemState extends State<GlassMenuItem> {
                 borderRadius: BorderRadius.circular(10), // Inner radius
               ),
               child: Row(
+                spacing: 12,
                 children: [
                   // Icon
-                  if (widget.icon != null || widget.iconWidget != null) ...[
-                    widget.iconWidget ??
+                  if (widget.icon != null || widget.leading != null) ...[
+                    widget.leading ??
                         Icon(
                           widget.icon,
                           size: 20,
                           color: iconColor,
                         ),
-                    const SizedBox(width: 12),
                   ],
 
                   // Title
