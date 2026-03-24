@@ -74,6 +74,9 @@ class GlassMenu extends StatefulWidget {
   /// Defaults to 8 pixels on all sides.
   final EdgeInsetsGeometry padding;
 
+  /// Spacing between menu items.
+  final double itemSpacing;
+
   /// Creates a liquid glass menu.
   const GlassMenu({
     super.key,
@@ -85,6 +88,7 @@ class GlassMenu extends StatefulWidget {
     this.glassSettings,
     this.quality,
     this.padding = const EdgeInsets.all(8),
+    this.itemSpacing = 0,
   }) : assert(trigger != null || triggerBuilder != null,
             'Either trigger or triggerBuilder must be provided');
 
@@ -422,6 +426,7 @@ class _GlassMenuState extends State<GlassMenu>
                             physics:
                                 const ClampingScrollPhysics(), // iOS-style scrolling
                             child: Column(
+                              spacing: widget.itemSpacing,
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: widget.items.map((item) {
